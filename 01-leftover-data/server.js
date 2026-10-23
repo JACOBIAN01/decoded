@@ -47,7 +47,7 @@ function handle(req, res) {
 }
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-const show = (who, text) => console.log(`  ${who.padEnd(6)} → ${text}`);
+const show = (who, text) => console.log(`  ${who.padEnd(9)} → ${text}`);
 
 async function visit(port, query) {
   const r = await fetch(`http://localhost:${port}/?${query}`);
@@ -58,19 +58,19 @@ const server = http.createServer(handle).listen(0, async () => {
   const { port } = server.address();
   console.log(`\nMode: ${FIXED ? "FIXED ✅" : "BUGGY ❌"}  (one shared worker)\n`);
 
-  show("Asha", "saves a private note, but her request crashes halfway");
-  show("server", await visit(port, "user=Asha&note=my-otp-4821&crash=yes"));
+  show("Akshat", "saves a private note, but his request crashes halfway");
+  show("server", await visit(port, "user=Akshat&note=my-otp-4821&crash=yes"));
   await sleep(300);
 
-  show("Ravi", "opens the same page a moment later, with no note");
-  const reply = await visit(port, "user=Ravi");
+  show("Subhadeep", "opens the same page a moment later, with no note");
+  const reply = await visit(port, "user=Subhadeep");
   show("server", reply);
 
   const leaked = reply.includes("my-otp-4821");
   console.log(
     leaked
-      ? "\n❌ Ravi just saw Asha's private note. Leftover data leaked.\n"
-      : "\n✅ Ravi sees nothing of Asha's. The worker started clean.\n"
+      ? "\n❌ Subhadeep just saw Akshat's private note. Leftover data leaked.\n"
+      : "\n✅ Subhadeep sees nothing of Akshat's. The worker started clean.\n"
   );
   server.close();
 });

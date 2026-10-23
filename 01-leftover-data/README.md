@@ -5,7 +5,7 @@ Companion code for **Decoded #01–#03: PHP2Shell**, the 14-year-old PHP flaw th
 ## Run it (Node 18+, no installs)
 
 ```bash
-npm start        # buggy: Ravi sees Asha's private note
+npm start        # buggy: Subhadeep sees Akshat's private note
 npm run fixed    # fixed: the worker starts clean every time
 ```
 
@@ -13,9 +13,9 @@ npm run fixed    # fixed: the worker starts clean every time
 
 Servers reuse the same **worker** for many visitors, because starting fresh each time is slow. In this demo:
 
-1. Asha saves a private note, but her request **crashes halfway** (like running out of memory).
-2. The crash skips the clean-up step, so her note stays in the shared worker.
-3. Ravi visits next, and the server shows him **Asha's note**.
+1. Akshat saves a private note, but his request **crashes halfway** (like running out of memory).
+2. The crash skips the clean-up step, so his note stays in the shared worker.
+3. Subhadeep visits next, and the server shows him **Akshat's note**.
 
 The fix is one idea: **reset the worker at the start of every request**, whatever happened before.
 
